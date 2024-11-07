@@ -20,7 +20,7 @@ func timeMW() gin.HandlerFunc {
 
 var limitCh = make(chan struct{}, 10)
 
-func LimitMW() gin.HandlerFunc {
+func limitMW() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		limitCh <- struct{}{}
 		log.Printf("concurrence %d\n", len(limitCh))
@@ -37,7 +37,7 @@ func boy(ctx *gin.Context) {
 func main() {
 	engine := gin.Default()
 	// engine.Use(LimitMW()) //global middlewares
-	engine.GET("/boy", timeMW(), boy, LimitMW())
+	engine.GET("/boy", timeMW(), boy, limitMW())
 
 	engine.Run("127.0.0.1:8000")
 }
