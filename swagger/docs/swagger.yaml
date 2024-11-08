@@ -1,0 +1,66 @@
+definitions:
+  main.User:
+    properties:
+      age:
+        description: 年齡
+        type: integer
+      id:
+        description: 用戶ID
+        type: integer
+      name:
+        description: 姓名
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /get/{id}:
+    get:
+      parameters:
+      - description: 用戶ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功
+          schema:
+            $ref: '#/definitions/main.User'
+        "400":
+          description: 參數錯誤
+          schema:
+            type: string
+        "500":
+          description: 內部錯誤
+          schema:
+            type: string
+      summary: 取得用戶
+  /update_user:
+    post:
+      parameters:
+      - description: 用戶信息
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/main.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 更新成功
+          schema:
+            type: string
+        "400":
+          description: 參數錯誤
+          schema:
+            type: string
+        "500":
+          description: 內部錯誤
+          schema:
+            type: string
+      summary: 更新用戶
+swagger: "2.0"
